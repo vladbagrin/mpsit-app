@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 if (getenv('IS_HEROKU')) {
-	$canvasUrl = "https://apps.facebook.com/birthday-thanker-heroku";
+	$canvasUrl = "https://apps.facebook.com/bt-heroku";
 } else {
 	$canvasUrl = "https://apps.facebook.com/birthday-thanker";
 }
