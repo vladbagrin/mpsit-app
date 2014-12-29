@@ -114,7 +114,7 @@ function formatTimestamp($ts) {
 	$tzDate = new DateTime();
 	$date->setTimezone($tzDate->getTimezone());
 	
-	return $date->format("d/m/Y");
+	return $date->format("d/m/Y H:i:s");
 }
 
 // returns TRUE if this is a message we're interested in
