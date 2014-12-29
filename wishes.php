@@ -15,7 +15,7 @@ if ($session) {
 		// birthday comes from facebook.php
 		echo "Birthday: " . $birthday . "<br/>";
 		$timestamp = getBirthdayTimestamp($birthday, $year);
-		echo "Birthday wishes from " . formatTimestamp($timestamp) . " to " . formatTimestamp(getNextDay($timestamp)) . "<br/>";
+		echo "Birthday wishes from " . formatTimestamp($timestamp) . " to " . formatTimestamp(getLastDay($timestamp)) . "<br/>";
 		
 		$wishesList = getWishesList($session, $timestamp);
 		
@@ -99,11 +99,12 @@ function getBirthdayTimestamp($birthday, $year) {
 	$birthDate->setDate($year, $m, $d);
 	$birthDate->setTime(0, 0);
 	
-	return $birthDate->getTimestamp();
+	// one day before is counted, too
+	return $birthDate->getTimestamp() - 24 * 60 * 60;
 }
 
-function getNextDay($timestamp) {
-	return $timestamp + 24 * 60 * 60;
+function getLastDay($start) {
+	return $start + 3 * 24 * 60 * 60;
 }
 
 
@@ -192,7 +193,7 @@ function validateTarget($targetId) {
 
 function validateDate($date, $timestamp) {
 	$ts = strtotime($date);
-	return $ts <= getNextDay($timestamp);
+	return $ts <= getLastDay($timestamp);
 }
 
 function isPostThankedFb($comments, $fbId) {
