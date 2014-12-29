@@ -4,7 +4,11 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
-$canvasUrl = "https://apps.facebook.com/birthday-thanker";
+if (getenv('IS_HEROKU')) {
+	$canvasUrl = "https://apps.facebook.com/birthday-thanker-heroku";
+} else {
+	$canvasUrl = "https://apps.facebook.com/birthday-thanker";
+}
 
 // list of patterns the message must have, for different languages
 /*

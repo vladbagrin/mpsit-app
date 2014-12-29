@@ -10,7 +10,11 @@ use Facebook\FacebookSession;
 use Facebook\GraphObject;
 use Facebook\GraphUser;
 
-FacebookSession::setDefaultApplication("1536267096623198", "0f3ec72570d77672f2e2ad68a29f8aea");
+if (getenv('IS_HEROKU')) {
+	FacebookSession::setDefaultApplication("1522623887991819", "add1bd65208deeeaf85a70bb33034b22");
+} else {
+	FacebookSession::setDefaultApplication("1536267096623198", "0f3ec72570d77672f2e2ad68a29f8aea");
+}
 
 $helper = new FacebookCanvasLoginHelper();
 try {
