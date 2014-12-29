@@ -23,14 +23,23 @@ try {
 	echo "Validation failed";
 }
 
-// the user is not logged in or authorized
+// the user is logged in or authorized
 if ($session) {
-	$userProfile = (new FacebookRequest(
-      $session, 'GET', '/me?fields=birthday,id'
-    ))->execute()->getGraphObject(GraphUser::className());
-	
-	$fbId = $userProfile->getProperty("id");
-	$birthday = $userProfile->getProperty("birthday");
+	try {
+		$userProfile = (new FacebookRequest(
+		  $session, "GET", "/me?fields=birthday,id"
+		))->execute()->getGraphObject(GraphUser::className());
+		
+		$fbId = $userProfile->getProperty("id");
+		$birthday = $userProfile->getProperty("birthday");
+		
+		// save the FB session
+		$_SESSION["fbSession"] = $session;
+	} catch (FacebookRequestException $e) {
+		echo "Exception occured, code: " . $e->getCode();
+		echo " with message: " . $e->getMessage();
+		return;
+	}   
 } else {
 	$redirectHelper = new FacebookRedirectLoginHelper($canvasUrl);
 	$loginUrl = $redirectHelper->getLoginUrl(array("read_stream", "publish_actions", "user_birthday"));
