@@ -1,0 +1,267 @@
+
+body{ font-family: Century; background="wallpaper.jpg"; width: 760px; overflow-y:hidden; overflow-x:hidden; 
+}
+
+.page{ width:auto; height:auto; } 
+
+.line{ width:auto; padding:5px; height:auto; display:table; }
+
+.tile{ height:100px; width:175px; float:left; margin:0 5px 0 0; padding:2px; 
+/*give the button curved corners, alter the size as required*/
+-moz-border-radius: 5px;
+-webkit-border-radius: 10px;
+border-radius: 10px;
+/*give the button a drop shadow*/
+-webkit-box-shadow: 0 0 4px rgba(0,0,0, .75);
+-moz-box-shadow: 0 0 4px rgba(0,0,0, .75);
+box-shadow: 0 0 4px rgba(0,0,0, .75);
+/*style the text*/
+color:#f3f3f3;
+font-size:1.1em;
+font-family:TungstenMedium;
+font-style:bold;
+margin-top:auto;
+}
+
+.tileLarge{
+    width:360px;
+}
+
+.amarelo{ background: linear-gradient(to bottom right, #DAA520, #DAE52F);
+} 
+
+.vermelho{ background: linear-gradient(to bottom right, #8D0000, #ED0000);
+} 
+
+.azul{ background: linear-gradient(to bottom right, #4382A1, #4382F8); 
+} 
+
+.verde{ background: linear-gradient(to bottom right, #2E8B57, #2E9B57);
+}
+
+.coral {background: linear-gradient(to bottom right, #E0808F, #FA8080);
+}
+
+.selected{
+    background: linear-gradient(to bottom right, #483D8B, #483D8B);
+}
+	
+@font-face {
+  font-family:TungstenMedium;
+  src: url(resources/Tungsten-Medium.otf);
+}
+
+input.button-add {
+    background-image: url(images/home.png); /* 16px x 16px */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    border: none;           /* assuming we don't want any borders */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 64px;           /* make this the size of your image */
+    padding-left: 64px;     /* make text start to the right of the image */
+    vertical-align: middle; /* align the text vertically centered */
+}
+/*-----------------------------------------------------------------------------------*/
+/*  Setup
+/*-----------------------------------------------------------------------------------*/
+.wrapper{
+width: 760px;
+height:570px;
+margin-left:auto;
+margin-right:auto;
+padding-top:20px;  
+min-height: 100%;   
+}
+.right{
+float:right;     /* A class I always add to float items right */
+}
+.left{
+float:left;      /* To float items left*/
+}
+
+/*-----------------------------------------------------------------------------------*/
+/*  Typography
+/*-----------------------------------------------------------------------------------*/
+ 
+a{
+cursor: pointer;
+color: #3B5998;
+text-decoration: none;
+}
+a:hover{
+text-decoration: underline;
+}
+strong{
+font-weight:bold;
+}
+em{
+font-style:italic;
+}
+h3{
+font-size: 16px;
+font-weight:bold;
+line-height: 1.1em; 
+margin-bottom:5px;
+}
+.postInfo{
+display:block; /* Spans are inline element so needs to be changed to block in order for the margin to work */
+color:#808080;
+margin-top:5px;
+margin-bottom:10px;
+}
+
+
+/*-----------------------------------------------------------------------------------*/
+/*  Extra Components
+/*-----------------------------------------------------------------------------------*/
+.logo{
+width:379px;
+height:128px;
+margin-left:auto;
+margin-right:auto;
+margin-bottom:26px;
+position: relative;
+-moz-box-shadow: 0 14px 10px -12px rgba(0,0,0,0.7);
+-webkit-box-shadow: 0 14px 10px -12px rgba(0,0,0,0.7);
+box-shadow: 0 14px 10px -12px rgba(0,0,0,0.7);
+}
+.search{
+padding: 1px 5px 2px 0;
+margin-bottom:20px;
+width:240px;
+-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+ box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.tabHeader{
+background-color: #F2F2F2;
+border-top: solid 1px #E2E2E2;
+padding: 4px 5px 5px;
+margin-top:15px;
+margin-bottom:10px;
+}
+.profileimage{
+float:left; 
+margin-right: 5px;
+}
+
+#user_info {
+	margin-left:320px;
+}
+
+#picture {
+	margin-left:5px;
+}
+
+#thank_button {
+	margin-left:210px;
+}
+
+.btn {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 11;
+  -moz-border-radius: 11;
+  border-radius: 11px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 3px 11px 3px 11px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+#list4 { width:520px; font-family:Georgia, Times, serif; font-size:15px; margin-left:100px; }
+#list4 ul { list-style: none; height:325px; overflow-y:auto; margin: 0 auto;}
+#list4 ul li { }
+#list4 ul li div { display:block; text-decoration:none; color:#000000; background-color:#FFFFFF; line-height:20px;
+	border-bottom-style:solid; border-bottom-width:1px; border-bottom-color:#CCCCCC; padding-left:2px; cursor:pointer; }
+#list4 ul li div:hover { color:#FFFFFF; background-image:url(images/hover.png); background-repeat:repeat-y; background-repeat:repeat-x; }
+#list4 ul li div strong { margin-right:10px; }
+#list4 ul li div p{ font-size: 12px; line-height: 1.5em; margin-bottom:0px;}
+
+#list4 ul li div p .checkboxC {margin-left:330px;}
+#list4 ul li div p .checkboxL {}
+
+/* The CSS */
+select {
+    padding:3px;
+    margin: 0;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    -webkit-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#888;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+
+label {position:relative}
+label:after {
+    content:'<>';
+    font:11px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:2px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+label:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#f8f8f8;
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
+.author {font:20px "Consolas", monospace;}
+.email {font:14px "Consolas", monospace;}
+.project {font:40px "Consolas", monospace;}
+
+.footbar {
+	margin-left:250px;
+}
+
+#language {
+	margin-left:40px;
+}
+
+.date {
+	height:8px;
+}
+
+.message{
+	height:20px;
+}
