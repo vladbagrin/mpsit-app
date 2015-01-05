@@ -7,7 +7,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 try {
-	$year = getCurrentYear();
+	$year = getCurrentYear()  - 1;
 	
 	$_SESSION['PICTURE'] =  "images/thankyou.png";
 	$_SESSION['BIRTHDAY'] =  $birthday;
@@ -32,7 +32,18 @@ function createElementType($name, $date, $message, $index, $isChecked, $postId, 
 	return $string;
 }
 
+function createElementTypeForLike($name, $date, $message, $index, $postId, $authorId) {
+	$string='<li> <div class="item"> <p class="message"> '.$message
+	.'<input class="checkboxC" type="checkbox" name="checkedLike[]" value="'.$index.'" checked>Like&nbsp&nbsp&nbsp<br> </p> <p class="date"> '.$date
+	.' </p> <p class="name"> '.$name
+	.' </p> 
+	<input type="hidden" name="post_id_'.$index.'" value="'.$postId.'">
+	<input type="hidden" name="author_id_'.$index.'" value="'.$authorId.'"> </li>';
+	return $string;
+}
+
 function getCommentByDetectingLanguageOutput() {
+	global $wishesList;
 
 echo '
 	<div id="list4">
@@ -76,6 +87,7 @@ echo '</ul>
    </div>';
 }
 function getCommentByChoosingLanguageOutput() {
+	global $wishesList;
 
 echo '
 	<div id="list4">
@@ -127,12 +139,13 @@ echo '</ul>
    </div>';
 }
 function getWriteYourselfCommentOutput() {
+	global $wishesList;
 
 echo '
 	<div id="list4">
 	<form method="post" action="thanks.php">
 	<input type="hidden" name="signed_request" value='.$_REQUEST['signed_request'].'>
-	<textarea name="customThank" id="custom_thank" rows="2" cols="69" placeholder="Write here your custom message (e.g Thanks %s!)"></textarea>
+	<textarea name="custom_thanks_0" id="custom_thank" rows="2" cols="69" placeholder="Write your custom message here (e.g Thanks %s!)"></textarea>
     <ul>';
 
 try {
@@ -178,8 +191,37 @@ function getAboutPageOutput() {
 }
 
 function getLikeAllPostsOutput() {
-	echo "<div>TODO: like all feedback</div>";
+	global $wishesList;
+
+echo '
+	<div id="list4">
+	<form method="post" action="thanks.php">
+	<input type="hidden" name="signed_request" value='.$_REQUEST['signed_request'].'>
+    <ul>';
+
+try {	
+	foreach ($wishesList as $i => $wishData) {
+	
+			$postId = $wishData["id"];
+			$authorId = $wishData["authorId"];
+			$authorName = $wishData["authorName"];
+			$message = $wishData["message"];
+			$date = formatTimestamp($wishData["createdTs"]);
+			
+			echo createElementTypeForLike($authorName, $date, $message, $i, $postId, $authorId);
+	}
+} catch (FacebookRequestException $e) {
+		echo "Exception occured, code: " . $e->getCode();
+		echo " with message: " . $e->getMessage();
+}  	
+
+echo '</ul>
+   <input type="hidden" name="type" value="detect">
+   <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Thank selected</button>
+   </form>
+   </div>';
 }
+
 
 function getCurrentYear() {
 	$date = new DateTime("now");

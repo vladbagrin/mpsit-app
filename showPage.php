@@ -2,7 +2,7 @@
 $pageType = $_POST["type"];
 switch ($pageType) {
     case "detect":
-		header("location:detect.html"); 
+		header("location:detect.php"); 
         break;
     case "choose":
         header("location:choose.html"); 

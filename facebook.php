@@ -36,14 +36,11 @@ if ($session) {
 		
 		$fbId = $userProfile->getProperty("id");
 		$birthday = $userProfile->getProperty("birthday");
-		
-		// save the FB session
-		$_SESSION["fbSession"] = $session;
 	} catch (FacebookRequestException $e) {
 		echo "Exception occured, code: " . $e->getCode();
 		echo " with message: " . $e->getMessage();
 		return;
-	}   
+	}
 } else {
 	$redirectHelper = new FacebookRedirectLoginHelper($canvasUrl);
 	$loginUrl = $redirectHelper->getLoginUrl(array("read_stream", "publish_actions", "user_birthday"));

@@ -259,9 +259,13 @@ label:before {
 }
 
 .date {
-	height:8px;
+	//height:8px;
 }
 
 .message{
-	height:20px;
+	//height:20px;
+}
+
+.tile_form {
+	display: inline;
 }

@@ -11,17 +11,29 @@ use Facebook\GraphUser;
 // session originates in facebook.php
 if ($session) {
 	// in case no birthday wish was checked
-	if (!isset($_POST["checked"]) ||
-		empty($_POST["checked"])) {
+	if (isset($_POST["checkedThank"]) &&
+		!empty($_POST["checkedThank"])) {
 		
-		echo "No thanks to give<br/>";
-	} else {
-		$checked = $_POST["checked"];
+		$checkedThank = $_POST["checkedThank"];
+		
 		try {
 			// custom replies
 			$customThanks = getCustomThanksList();
 			
-			foreach ($checked as $i) {
+			// chosen language
+			if (isset($_POST["language"])) {
+				$chosenLanguage = $_POST["language"];
+				if ($chosenLanguage !== "EN" &&
+					$chosenLanguage !== "FR" &&
+					$chosenLanguage !== "RO") {
+					$chosenLanguage = null;
+				}
+			} else {
+				$chosenLanguage = null;
+			}
+			
+			echo "Thanked posts:<br/>\n";
+			foreach ($checkedThank as $i) {
 				if (!isset($_POST["post_id_" . $i])) {
 					echo "Invalid form: no post_id_" . $i. "<br/>";
 					continue;
@@ -36,7 +48,7 @@ if ($session) {
 				}
 				
 				$postId = $_POST["post_id_" . $i];
-				$language = $_POST["language_" . $i];
+				$language = $chosenLanguage === null ? $_POST["language_" . $i] : $chosenLanguage;
 				$fromId = $_POST["author_id_" . $i];
 				$fromName = getUserName($session, $fromId);
 				
@@ -49,7 +61,8 @@ if ($session) {
 				// TODO: is this good error checking?
 				if ($id !== null) {
 					$commentText = getCommentText($session, $id);
-					echo "$fromName: $commentText <br/>";
+					echo "$fromName: $commentText";
+					echo "<br/>\n";
 				} else {
 					echo "Failed to thank $fromName for postId=$postId <br/>";
 				}
@@ -59,6 +72,36 @@ if ($session) {
 			echo " with message: " . $e->getMessage();
 		}
 	}
+	
+	// which posts to like
+	// keeping this separate in case we just want to like some posts
+	if (isset($_POST["checkedLike"]) && !empty($_POST["checkedLike"])) {
+		$checkedLike = $_POST["checkedLike"];
+	
+		echo "<br/>Liked posts:<br/>\n";
+		foreach ($checkedLike as $i) {
+			if (!isset($_POST["post_id_" . $i])) {
+				echo "Invalid form: no post_id_" . $i. "<br/>";
+				continue;
+			}
+			
+			$postId = $_POST["post_id_" . $i];
+			
+			try {
+				$likeResult = like($session, $postId);
+				
+				if ($likeResult) {
+					$fromId = $_POST["author_id_" . $i];
+					$fromName = getUserName($session, $fromId);
+					echo "$fromName<br/>\n";
+				}
+			} catch (FacebookRequestException $e) {
+				echo "<br/>Exception occured, code: " . $e->getCode();
+				echo " with message: " . $e->getMessage() . "<br/>\n";
+			}
+		}
+	}
+	
 	?>
 	<a target="_parent" href="<?=$canvasUrl?>">Back</a>
 	<?php
@@ -124,6 +167,20 @@ function postComment($session, $postId, $authorName, $languageCode = "EN") {
 	$id = $graphObject->getProperty("id");
 	
 	return $id;
+}
+
+// send a like
+function like($session, $postId) {
+	$request = new FacebookRequest(
+	  $session,
+	  "POST",
+	  "/$postId/likes"
+	);
+	$response = $request->execute();
+	$graphObject = $response->getGraphObject();
+	$success = $graphObject->getProperty("success");
+	
+	return $success === True;
 }
 
 function postCustomComment($session, $postId, $authorName, $comments) {
