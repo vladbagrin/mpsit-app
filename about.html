@@ -1,4 +1,6 @@
-<?php
+<?php		
+require_once("global.php");
+require_once("facebook.php");
 require_once("utils.php");
 ?>
 
@@ -22,7 +24,12 @@ require_once("utils.php");
 			 
 		
         <div class="tab_container" align="center">
-		<?php getAboutPageOutput() ?>
+		<?php 			// session originates in facebook.php
+			if ($session) {
+				getAboutPageOutput();
+			}
+			
+		?>
         </div><!--End Tab Container -->
      
      </div><!--End Main Content-->

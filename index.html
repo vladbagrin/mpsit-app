@@ -1,3 +1,9 @@
+<?php		
+require_once("global.php");
+require_once("facebook.php");
+require_once("utils.php");
+?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -20,6 +26,7 @@
 		
         <div class="tab_container">
 			<form action="showPage.php" method="post">
+			<input type="hidden" name="signed_request" value="<?=$_REQUEST['signed_request']?>">
 			<div class="pagina"> 
 				<div class="line"> 
 					<button class="tile tileLarge verde" name='type' type="submit" value="detect"> 

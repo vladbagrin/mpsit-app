@@ -1,4 +1,6 @@
-<?php
+<?php		
+require_once("global.php");
+require_once("facebook.php");
 require_once("utils.php");
 ?>
 
@@ -29,7 +31,10 @@ require_once("utils.php");
 		</div>
 		</div>		
 		<?php
-			getCommentByChoosingLanguageOutput();
+			// session originates in facebook.php
+			if ($session) {
+				getCommentByChoosingLanguageOutput();
+			}
 		?>
         </div><!--End Tab Container -->
      

@@ -1,7 +1,9 @@
-<?php
+<?php		
+require_once("global.php");
+require_once("facebook.php");
 require_once("utils.php");
 ?>
-
+			
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -14,6 +16,7 @@ require_once("utils.php");
 <script src="js/script.js" type="text/javascript"></script>
 </head>
  
+
 <body background="images/wallpaper.jpg">
 <div class="wrapper">
 <INPUT Type="BUTTON" class="btn" VALUE="Home Page" ONCLICK="window.location.href='index.html'"> 
@@ -29,7 +32,10 @@ require_once("utils.php");
 		</div>
 		</div>		
 		<?php
-			getCommentByDetectingLanguageOutput();
+			// session originates in facebook.php
+			if ($session) {
+				getCommentByDetectingLanguageOutput();
+			}
 		?>
         </div><!--End Tab Container -->
      
