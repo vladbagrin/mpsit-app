@@ -7,7 +7,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 try {
-	$year = getCurrentYear()  - 1;
+	$year = getCurrentYear();
 	
 	$_SESSION['PICTURE'] =  "images/thankyou.png";
 	$_SESSION['BIRTHDAY'] =  $birthday;
