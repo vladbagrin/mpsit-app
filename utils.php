@@ -7,7 +7,7 @@ use Facebook\GraphObject;
 use Facebook\FacebookRequestException;
 
 try {
-	$year = getCurrentYear();
+	$year = getCurrentYear() - 1;
 	
 	$_SESSION['PICTURE'] =  "images/thankyou.png";
 	$_SESSION['BIRTHDAY'] =  $birthday;
@@ -34,7 +34,7 @@ function createElementType($name, $date, $message, $index, $isChecked, $postId, 
 
 function createElementTypeForLike($name, $date, $message, $index, $postId, $authorId) {
 	$string='<li> <div class="item"> <p class="message"> '.$message
-	.'<input class="checkboxC" type="checkbox" name="checkedLike[]" value="'.$index.'" checked>Like&nbsp&nbsp&nbsp<br> </p> <p class="date"> '.$date
+	.'</br><input class="checkboxC2" type="checkbox" name="checkedLike[]" value="'.$index.'" checked>Like&nbsp&nbsp&nbsp<br> </p> <p class="date"> '.$date
 	.' </p> <p class="name"> '.$name
 	.' </p> 
 	<input type="hidden" name="post_id_'.$index.'" value="'.$postId.'">
@@ -82,6 +82,7 @@ try {
 
 echo '</ul>
    <input type="hidden" name="type" value="detect">
+   </br>
    <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Thank selected</button>
    </form>
    </div>';
@@ -134,6 +135,7 @@ try {
 	
 echo '</ul>
    <input type="hidden" name="type" value="choose">
+   </br>
    <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Thank selected</button>
    </form>
    </div>';
@@ -179,6 +181,7 @@ try {
 	
  echo '</ul>
    <input type="hidden" name="type" value="write">
+   </br>
    <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Thank selected</button>
    </form>
    </div>';
@@ -217,6 +220,7 @@ try {
 
 echo '</ul>
    <input type="hidden" name="type" value="detect">
+   </br>
    <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Thank selected</button>
    </form>
    </div>';

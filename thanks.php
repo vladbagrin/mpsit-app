@@ -10,6 +10,39 @@ use Facebook\GraphUser;
 
 // session originates in facebook.php
 if ($session) {
+
+?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Birthday Thanker</title>
+ 
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.3.0/build/cssreset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+<script src="js/script.js" type="text/javascript"></script>
+</head>
+ 
+<body background="images/wallpaper.jpg">
+<div class="wrapper">
+	<INPUT Type="BUTTON" class="btn" VALUE="Home Page" ONCLICK="top.location.href='index.php'"> 
+    <div class="maincontent">
+			<div class="logo"><img src="images/thankyou2.png" width="379" height="128" alt="thankyou logo" a href="index.php"></div>
+			<div class="tab_container">
+			<div id="user_info">
+			<div id="picture">
+				<img src="<?php echo $_SESSION['PICTURE']; ?>"> </br>
+			</div>
+			<div id="birthday">
+				<?php echo $_SESSION['BIRTHDAY']; ?>
+			</div>
+			</div>
+			</br>
+            <div id="list4">	
+			<ul>
+			
+<?php
 	// in case no birthday wish was checked
 	if (isset($_POST["checkedThank"]) &&
 		!empty($_POST["checkedThank"])) {
@@ -30,20 +63,18 @@ if ($session) {
 				}
 			} else {
 				$chosenLanguage = null;
-			}
-			
-			echo "Thanked posts:<br/>\n";
+			}			
 			foreach ($checkedThank as $i) {
 				if (!isset($_POST["post_id_" . $i])) {
-					echo "Invalid form: no post_id_" . $i. "<br/>";
+					echo "<li><div class=\"item\"> <div class=\"error\"> Invalid form: no post_id_" . $i. "</div></div></li>";
 					continue;
 				}
 				if (!isset($_POST["author_id_" . $i])) {
-					echo "Invalid form: no author_id_" . $i. "<br/>";
+					echo "<li><div class=\"item\"> <div class=\"error\"> Invalid form: no author_id_" . $i. "</div></div></li>";
 					continue;
 				}
 				if (!isset($_POST["language_" . $i])) {
-					echo "Invalid form: no language_" . $i. "<br/>";
+					echo "<li><div class=\"item\"> <div class=\"error\"> Invalid form: no language_" . $i. "</div></div></li>";
 					continue;
 				}
 				
@@ -61,10 +92,10 @@ if ($session) {
 				// TODO: is this good error checking?
 				if ($id !== null) {
 					$commentText = getCommentText($session, $id);
-					echo "$fromName: $commentText";
-					echo "<br/>\n";
+					echo "<li><div class=\"item\"> <div class=\"thanked\"> <p class=\"fromName\"> $fromName </p> <p class=\"commentText\"> $commentText";
+					echo "</p></div></div></li>";
 				} else {
-					echo "Failed to thank $fromName for postId=$postId <br/>";
+					echo "<li><div class=\"item\"> <div class=\"error\"> Failed to thank $fromName for postId=$postId </div></div></li>";
 				}
 			}
 		} catch (FacebookRequestException $e) {
@@ -72,16 +103,13 @@ if ($session) {
 			echo " with message: " . $e->getMessage();
 		}
 	}
-	
 	// which posts to like
 	// keeping this separate in case we just want to like some posts
 	if (isset($_POST["checkedLike"]) && !empty($_POST["checkedLike"])) {
 		$checkedLike = $_POST["checkedLike"];
-	
-		echo "<br/>Liked posts:<br/>\n";
 		foreach ($checkedLike as $i) {
 			if (!isset($_POST["post_id_" . $i])) {
-				echo "Invalid form: no post_id_" . $i. "<br/>";
+				echo "<li><div class=\"item\"> <div class=\"error\">  Invalid form: no post_id_" . $i. "</div></div></li>";
 				continue;
 			}
 			
@@ -93,7 +121,7 @@ if ($session) {
 				if ($likeResult) {
 					$fromId = $_POST["author_id_" . $i];
 					$fromName = getUserName($session, $fromId);
-					echo "$fromName<br/>\n";
+					echo "<li><div class=\"item\"> <div class=\"liked\"> <p class=\"fromName\"> $fromName </p> <p class=\"commentText\"> <b> Liked </b> </p> </div> </div></li>";
 				}
 			} catch (FacebookRequestException $e) {
 				echo "<br/>Exception occured, code: " . $e->getCode();
@@ -103,7 +131,17 @@ if ($session) {
 	}
 	
 	?>
-	<a target="_parent" href="<?=$canvasUrl?>">Back</a>
+		</ul>
+		 </div>
+		 </div><!--End Tab Container -->
+	     </div><!--End Main Content-->
+     
+			<div class="sidebar">
+			</div><!--End Sidebar-->
+		 
+		</div><!--End Wrapper -->
+		</body>
+		</html>
 	<?php
 }
 

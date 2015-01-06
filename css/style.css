@@ -194,6 +194,7 @@ margin-right: 5px;
 #list4 ul li div p{ font-size: 12px; line-height: 1.5em; margin-bottom:0px;}
 
 #list4 ul li div p .checkboxC {margin-left:330px;}
+#list4 ul li div p .checkboxC2 {margin-left:400px;}
 #list4 ul li div p .checkboxL {}
 
 /* The CSS */
@@ -259,11 +260,11 @@ label:before {
 }
 
 .date {
-	//height:8px;
+	height:8px;
 }
 
 .message{
-	//height:20px;
+	height:20px;
 }
 
 .tile_form {
