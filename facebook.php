@@ -36,6 +36,14 @@ if ($session) {
 		
 		$fbId = $userProfile->getProperty("id");
 		$birthday = $userProfile->getProperty("birthday");
+		
+		$picture = (new FacebookRequest(
+		  $session, "GET", "/me/?fields=picture"
+		))->execute()->getGraphObject(GraphObject::className())->getProperty("picture")->getProperty("url");
+		
+		//$picture = $profilePicture->getProperty("picture");
+	
+		
 	} catch (FacebookRequestException $e) {
 		echo "Exception occured, code: " . $e->getCode();
 		echo " with message: " . $e->getMessage();

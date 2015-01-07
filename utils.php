@@ -9,7 +9,7 @@ use Facebook\FacebookRequestException;
 try {
 	$year = getCurrentYear() - 1;
 	
-	$_SESSION['PICTURE'] =  "images/thankyou.png";
+	$_SESSION['PICTURE'] =  $picture;
 	$_SESSION['BIRTHDAY'] =  $birthday;
 
 	$timestamp = getBirthdayTimestamp($birthday, $year);
