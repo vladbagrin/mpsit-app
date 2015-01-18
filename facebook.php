@@ -12,8 +12,10 @@ use Facebook\GraphUser;
 
 if (getenv('IS_HEROKU')) {
 	FacebookSession::setDefaultApplication("1522623887991819", "add1bd65208deeeaf85a70bb33034b22");
+	$fb_app_id = "1522623887991819";
 } else {
 	FacebookSession::setDefaultApplication("1536267096623198", "0f3ec72570d77672f2e2ad68a29f8aea");
+	$fb_app_id = "1536267096623198";
 }
 
 $helper = new FacebookCanvasLoginHelper();

@@ -2,6 +2,8 @@
 require_once("global.php");
 require_once("facebook.php");
 require_once("utils.php");
+// Link to the current page, for the like button
+$link = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 ?>
 
 <!DOCTYPE HTML>
@@ -22,7 +24,7 @@ require_once("utils.php");
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=338102519708387&version=v2.0";
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=<?=$fb_app_id?>&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
@@ -73,8 +75,8 @@ require_once("utils.php");
         </div><!--End Tab Container -->
      </br></br></br>
 	<div class="footbar">
-	<div class="fb-like" data-href="https://apps.facebook.com/birthday-thanker" data-width="200" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-	<div class="fb-comments" data-href="https://apps.facebook.com/birthday-thanker/" data-width="740" data-numposts="1" data-colorscheme="light"></div>
+	<div class="fb-like" data-href="<?=$link?>" data-width="200" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+	<div class="fb-comments" data-href="<?=$link?>" data-width="740" data-numposts="1" data-colorscheme="light"></div>
     </div><!--End Sidebar-->
 	
      </div><!--End Main Content-->
