@@ -17,6 +17,15 @@ require_once("utils.php");
 </head>
  
 <body background="images/wallpaper.jpg">
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=338102519708387&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <div class="wrapper">
 	<div> </br> </div>
 	
@@ -50,7 +59,7 @@ require_once("utils.php");
 					<form action="like.php" method="post" class="tile_form">
 						<input type="hidden" name="signed_request" value="<?=$_REQUEST['signed_request']?>">
 						<button class="tile amarelo" name='type' type="submit" value="like"> 
-							</br> Like all posts
+							</br> Like posts
 						</button>
 					</form>
 					<form action="about.php" method="post" class="tile_form">
@@ -64,7 +73,8 @@ require_once("utils.php");
         </div><!--End Tab Container -->
      </br></br></br>
 	<div class="footbar">
-	TODO:Facebook like/comment bar
+	<div class="fb-like" data-href="https://apps.facebook.com/birthday-thanker" data-width="200" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+	<div class="fb-comments" data-href="https://apps.facebook.com/birthday-thanker/" data-width="740" data-numposts="1" data-colorscheme="light"></div>
     </div><!--End Sidebar-->
 	
      </div><!--End Main Content-->
