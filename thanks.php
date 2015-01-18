@@ -44,9 +44,13 @@ if ($session) {
 			
 <?php
 	// in case no birthday wish was checked
+	$ok1 = true;
+	$ok2 = true;
+	
 	if (isset($_POST["checkedThank"]) &&
 		!empty($_POST["checkedThank"])) {
 		
+		$ok1 = false;
 		$checkedThank = $_POST["checkedThank"];
 		
 		try {
@@ -97,7 +101,7 @@ if ($session) {
 				} else {
 					echo "<li><div class=\"item\"> <div class=\"error\"> Failed to thank $fromName for postId=$postId </div></div></li>";
 				}
-			}
+			}	
 		} catch (FacebookRequestException $e) {
 			echo "Exception occured, code: " . $e->getCode();
 			echo " with message: " . $e->getMessage();
@@ -106,6 +110,8 @@ if ($session) {
 	// which posts to like
 	// keeping this separate in case we just want to like some posts
 	if (isset($_POST["checkedLike"]) && !empty($_POST["checkedLike"])) {
+	
+		$ok2 = false;
 		$checkedLike = $_POST["checkedLike"];
 		foreach ($checkedLike as $i) {
 			if (!isset($_POST["post_id_" . $i])) {
@@ -128,6 +134,11 @@ if ($session) {
 				echo " with message: " . $e->getMessage() . "<br/>\n";
 			}
 		}
+	}
+	
+	if($ok1 && $ok2)
+	{
+		echo "<H1 id='etl'> Empty thank/like list! </H1>";
 	}
 	
 	?>
