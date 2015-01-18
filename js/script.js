@@ -1,5 +1,6 @@
 $(function()
-{ $(".tile").hover(
+{ 
+   $(".tile").hover(
   function() {
     $(this).addClass("selected");
   }, function() {

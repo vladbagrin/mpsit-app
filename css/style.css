@@ -1,5 +1,5 @@
 
-body{ font-family: Century; background="wallpaper.jpg"; width: 760px; overflow-y:hidden; overflow-x:hidden; 
+body{ font-family: Century; background="wallpaper.jpg"; width: 760px; overflow-x:hidden; 
 }
 
 .page{ width:auto; height:auto; } 
@@ -23,6 +23,7 @@ font-style:bold;
 margin-top:auto;
 }
 
+
 .tileLarge{
     width:360px;
 }
@@ -36,10 +37,16 @@ margin-top:auto;
 .azul{ background: linear-gradient(to bottom right, #4382A1, #4382F8); 
 } 
 
+
 .verde{ background: linear-gradient(to bottom right, #2E8B57, #2E9B57);
 }
 
+
 .coral {background: linear-gradient(to bottom right, #E0808F, #FA8080);
+}
+
+.tile:hover {
+	background: linear-gradient(to bottom right, #505050 , #202020 );
 }
 
 .selected{
@@ -251,9 +258,6 @@ label:before {
 .email {font:14px "Consolas", monospace;}
 .project {font:40px "Consolas", monospace;}
 
-.footbar {
-	margin-left:250px;
-}
 
 #language {
 	margin-left:40px;

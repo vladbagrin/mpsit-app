@@ -221,7 +221,7 @@ try {
 echo '</ul>
    <input type="hidden" name="type" value="detect">
    </br>
-   <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Thank selected</button>
+   <button class="btn" id="thank_button" align="center" type="submit" value="Thank">Like selected</button>
    </form>
    </div>';
 }
