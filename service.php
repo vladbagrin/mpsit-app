@@ -52,6 +52,14 @@ function selectThanks($languageCode, $addressee, $includeAddressed = TRUE) {
 	}
 }
 
+if (isset($_POST["json_request"])) {
+	$jsonRequest = $_POST["json_request"];
+	$requestArray = json_decode($jsonRequest, true);
+	$useBatch = True;
+} else {
+	$useBatch = False;
+}
+
 if (isset($_GET["name"])) {
 	$name = $_GET["name"];
 	$isAddressed = True;
@@ -69,11 +77,22 @@ if (isset($_GET["language"])) {
 	$languageCode = "EN";
 }
 
-$thanksMessage = selectThanks($languageCode, $name, $isAddressed);
+if ($useBatch === True && $requestArray !== null) {
+	$returnArray = array();
+	foreach ($requestArray as $index => $postData) {
+		$replyMessage = selectThanks($postData["language"], $postData["fromName"]);
+		array_push($returnArray, array(
+			"postId" => $postData["postId"],
+			"message" => $replyMessage,
+			"fromName" => $postData["fromName"]
+		));
+	}
+} else {
+	$thanksMessage = selectThanks($languageCode, $name, $isAddressed);
+	$returnArray = array("reply" => $thanksMessage);
+}
 
-$returnArray = array("reply" => $thanksMessage);
 $jsonResponse = json_encode($returnArray);
-
 echo $jsonResponse;
-//echo $_POST["value"];
+
 ?>

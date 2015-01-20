@@ -99,20 +99,43 @@ if ($session) {
 			}
 			
 			// reply posting routine
-			foreach ($postDataArray as $postData) {
-				if (empty($customThanks)) {
-					$id = postComment($session, $postData["postId"], $postData["fromName"], $postData["language"]);
-				} else {
-					$id = postCustomComment($session, $postData["postId"], $postData["fromName"], $customThanks);
-				}
+			if ($useService === True && empty($customThanks)) {
+				$repliesArray = sendBatchServiceRequest($postDataArray);
 				
-				// TODO: is this good error checking?
-				if ($id !== null) {
-					$commentText = getCommentText($session, $id);
-					echo "<li><div class=\"item\"> <div class=\"thanked\"> <p class=\"fromName\"> $fromName </p> <p class=\"commentText\"> $commentText";
-					echo "</p></div></div></li>";
-				} else {
-					echo "<li><div class=\"item\"> <div class=\"error\"> Failed to thank $fromName for postId=$postId </div></div></li>";
+				foreach ($repliesArray as $index => $replyData) {
+					$fromName = $replyData["fromName"];
+					$postId = $replyData["postId"];
+					$commentText = $replyData["message"];
+					
+					$id = postCommentFromService($session, $replyData["postId"], $replyData["message"]);
+					
+					// TODO: is this good error checking?
+					if ($id !== null) {
+						echo "<li><div class=\"item\"> <div class=\"thanked\"> <p class=\"fromName\"> $fromName </p> <p class=\"commentText\"> $commentText";
+						echo "</p></div></div></li>";
+					} else {
+						echo "<li><div class=\"item\"> <div class=\"error\"> Failed to thank $fromName for postId=$postId </div></div></li>";
+					}
+				}
+			} else {
+				foreach ($postDataArray as $postData) {
+					$fromName = $postData["fromName"];
+					$postId = $postData["postId"];
+					
+					if (empty($customThanks)) {
+						$id = postComment($session, $postId, $fromName, $postData["language"]);
+					} else {
+						$id = postCustomComment($session, $postId, $fromName, $customThanks);
+					}
+					
+					// TODO: is this good error checking?
+					if ($id !== null) {
+						$commentText = getCommentText($session, $id);
+						echo "<li><div class=\"item\"> <div class=\"thanked\"> <p class=\"fromName\"> $fromName </p> <p class=\"commentText\"> $commentText";
+						echo "</p></div></div></li>";
+					} else {
+						echo "<li><div class=\"item\"> <div class=\"error\"> Failed to thank $fromName for postId=$postId </div></div></li>";
+					}
 				}
 			}
 		} catch (FacebookRequestException $e) {
@@ -245,6 +268,22 @@ function like($session, $postId) {
 	return $success === True;
 }
 
+function postCommentFromService($session, $postId, $message) {
+	$request = new FacebookRequest(
+	  $session,
+	  "POST",
+	  "/$postId/comments",
+	  array (
+		"message" => $message
+	  )
+	);
+	$response = $request->execute();
+	$graphObject = $response->getGraphObject();
+	$id = $graphObject->getProperty("id");
+	
+	return $id;
+}
+
 function postCustomComment($session, $postId, $authorName, $comments) {
 	$request = new FacebookRequest(
 	  $session,
@@ -287,18 +326,24 @@ function getCommentText($session, $id) {
 	}
 }
 
-function sendBatchServiceRequest() {
-	$ch = curl_init("localhost/service.php");
+function sendBatchServiceRequest($requestArray) {
+	global $serverUrl;
+	
+	$jsonRequest = json_encode($requestArray);
+	$ch = curl_init("$serverUrl/service.php");
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
 	curl_setopt($ch, CURLOPT_POST, True);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, "value=ceva");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, "json_request=$jsonRequest");
 	curl_setopt($ch, CURLOPT_HEADER, 0);
 	$data = curl_exec($ch);
 	curl_close($ch);
-	if ($data !== FALSE) {
-		echo $data;
+	
+	$returnArray = json_decode($data, true);
+	
+	if ($returnArray !== null) {
+		return $returnArray;
 	} else {
-		echo "Error :(";
+		return array();
 	}
 }
 ?>

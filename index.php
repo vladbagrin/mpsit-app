@@ -29,22 +29,6 @@ $link = "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div class="wrapper">
-	<p>
-	<?php
-	$ch = curl_init("$serverUrl/service.php");
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
-	curl_setopt($ch, CURLOPT_POST, True);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, "value=ceva");
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	$data = curl_exec($ch);
-	curl_close($ch);
-	if ($data !== FALSE) {
-		echo $data;
-	} else {
-		echo "Error :(";
-	}
-	?>
-	</p>
 	<div> </br> </div>
 	
     <div class="maincontent">
