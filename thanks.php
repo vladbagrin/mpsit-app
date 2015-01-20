@@ -67,7 +67,10 @@ if ($session) {
 				}
 			} else {
 				$chosenLanguage = null;
-			}			
+			}
+			
+			$postDataArray = array();
+			
 			foreach ($checkedThank as $i) {
 				if (!isset($_POST["post_id_" . $i])) {
 					echo "<li><div class=\"item\"> <div class=\"error\"> Invalid form: no post_id_" . $i. "</div></div></li>";
@@ -87,10 +90,20 @@ if ($session) {
 				$fromId = $_POST["author_id_" . $i];
 				$fromName = getUserName($session, $fromId);
 				
+				array_push($postDataArray, array(
+					"postId" => $postId,
+					"language" => $language,
+					"fromId" => $fromId,
+					"fromName" => $fromName
+				));
+			}
+			
+			// reply posting routine
+			foreach ($postDataArray as $postData) {
 				if (empty($customThanks)) {
-					$id = postComment($session, $postId, $fromName, $language);
+					$id = postComment($session, $postData["postId"], $postData["fromName"], $postData["language"]);
 				} else {
-					$id = postCustomComment($session, $postId, $fromName, $customThanks);
+					$id = postCustomComment($session, $postData["postId"], $postData["fromName"], $customThanks);
 				}
 				
 				// TODO: is this good error checking?
@@ -101,7 +114,7 @@ if ($session) {
 				} else {
 					echo "<li><div class=\"item\"> <div class=\"error\"> Failed to thank $fromName for postId=$postId </div></div></li>";
 				}
-			}	
+			}
 		} catch (FacebookRequestException $e) {
 			echo "Exception occured, code: " . $e->getCode();
 			echo " with message: " . $e->getMessage();
@@ -271,6 +284,21 @@ function getCommentText($session, $id) {
 		echo "Exception occured, code: " . $e->getCode();
 		echo " with message: " . $e->getMessage();
 		return $id;
+	}
+}
+
+function sendBatchServiceRequest() {
+	$ch = curl_init("localhost/service.php");
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
+	curl_setopt($ch, CURLOPT_POST, True);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, "value=ceva");
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$data = curl_exec($ch);
+	curl_close($ch);
+	if ($data !== FALSE) {
+		echo $data;
+	} else {
+		echo "Error :(";
 	}
 }
 ?>

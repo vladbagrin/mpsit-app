@@ -10,6 +10,14 @@ if (getenv('IS_HEROKU')) {
 	$canvasUrl = "https://apps.facebook.com/birthday-thanker";
 }
 
+if (getenv('IS_HEROKU')) {
+	$serverUrl = "birthday-thanker.herokuapp.com";
+} else {
+	$serverUrl = "localhost";
+}
+
+$useService = True;
+
 // list of patterns the message must have, for different languages
 /*
 Possible phrases:
